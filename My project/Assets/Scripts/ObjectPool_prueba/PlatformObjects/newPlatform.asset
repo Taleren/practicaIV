@@ -10,11 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2c2dda62a9e3b67478905f10424c8680, type: 3}
-  m_Name: GreenPlatform
+  m_Name: newPlatform
   m_EditorClassIdentifier: 
-  name: green
-  colorTest:
-    serializedVersion: 2
-    rgba: 3079936
-  eventTest: oooh que verde
-  appearRatio: 5
+  name: plataforma morada:3
+  appearRatio: 100
+  platformEvent: 0

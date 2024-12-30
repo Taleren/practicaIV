@@ -1,47 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.RestService;
 using UnityEngine;
 
 public class PlatformLoader : MonoBehaviour, IObjectPool
 {
-    public static PlatformLoader Instance;
+    //public static PlatformLoader Instance;
 
     [SerializeField] private List<PlatformObject> platformObjects;
     [SerializeField] private GameObject platformPrefab;
     [SerializeField] private GameObject platformParent;
+    [SerializeField] private float branchProbability;
+
+    private float currentBranchProbability;
+    public bool isPaused = false;
     private List<Platform> poolablePlatforms = new List<Platform>(); 
     int activePlatforms = 0;
-    int totalPoolSize = 6;
+    int totalPoolSize = 12;
+    [SerializeField] int usedSlots = 0;
+
+    bool isBranch = false;
 
     [SerializeField] private float platformMoveSpeed;
 
     public int maxPlatformNumber = 4;
     private Queue<Platform> platformList = new Queue<Platform>();
-    
+    private Queue<Platform> leftBranchQueue = new Queue<Platform>();
+    private Queue<Platform> rightBranchQueue = new Queue<Platform>();
+
     Vector3 lastPlatformPos = new Vector3(6.0999999f,-4f, -0.14738825f);
 
     int probabilityTotal;
 
+    bool canClick;
+
     private void Awake()
     {
-        if(Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
-      
         
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        currentBranchProbability = branchProbability;
         poolablePlatforms.Add(platformPrefab.GetComponent<Platform>());
         platformPrefab.GetComponent<Platform>().Active = false;
         for (int i = 0; i < totalPoolSize-1; i++)
@@ -73,11 +75,18 @@ public class PlatformLoader : MonoBehaviour, IObjectPool
         }
         if (activePlatforms < maxPlatformNumber)
         {
+            //canClick = false;
             createPlatform(platformObjects[0], platformMoveSpeed/2);
+            
+        }else
+        {
+            //canClick = true;
         }
+
+       
     }
 
-    public void createPlatform(PlatformObject p, float s)
+    private void createPlatform(PlatformObject p, float s)
     {
         bool aPlatformIsMoving = false;
         foreach (Platform pf in platformList)
@@ -85,30 +94,42 @@ public class PlatformLoader : MonoBehaviour, IObjectPool
             aPlatformIsMoving = pf.isMoving;
         }
         //while(aPlatformIsMoving);
-        if (!aPlatformIsMoving)
+        if (!aPlatformIsMoving && !isPaused)
         {
             Platform platform = (Platform)Get();
 
 
-            if (platformList.Count != 0)
+            if (platformList.Count != 0 )
             {
 
                 foreach (Platform pf in platformList)
                 {
-                    Debug.Log(pf.name);
+                    //Debug.Log(pf.name);
+                    pf.Move(s);
+                }
+                foreach (Platform pf in rightBranchQueue)
+                {
+                    //Debug.Log(pf.name);
+                    pf.Move(s);
+                }
+                foreach (Platform pf in leftBranchQueue)
+                {
+                    //Debug.Log(pf.name);
                     pf.Move(s);
                 }
             }
 
-            if (platformList.Count == maxPlatformNumber)
+            if (usedSlots == maxPlatformNumber)
             {
 
                 platformList.Dequeue().Move(s);
-
+                usedSlots--;
             }
 
-            platform.Load(p);
 
+            usedSlots++;
+            platform.Load(p);
+            platform.gameObject.transform.position = new Vector3(6.06f, -4, 0);
             platform.OnCreate(s);
             platformList.Enqueue(platform);
 
@@ -137,17 +158,162 @@ public class PlatformLoader : MonoBehaviour, IObjectPool
         obj.Reset();
     }
 
-    private void createRandomPlatform()
+    public void createRandomPlatform()
     {
-        int random = Random.Range(0, probabilityTotal);
-        int i = 0;
-        while (i < platformObjects.Count - 1 && random < platformObjects[i].appearRatio)
+        int isBranched = Random.Range(0, 100);
+        if(isBranched > branchProbability && !isBranch)
         {
-            i++;
-            random -= platformObjects[i].appearRatio;
+            int random = Random.Range(0, probabilityTotal);
+            int i = 0;
+            while (i < platformObjects.Count - 1 && random < platformObjects[i].appearRatio)
+            {
+                i++;
+                random -= platformObjects[i].appearRatio;
+            }
+            createPlatform(platformObjects[i], platformMoveSpeed);
+            
         }
-        createPlatform(platformObjects[i], platformMoveSpeed);
+        else
+        {
+            int random1 = Random.Range(0, probabilityTotal);
+            int i = 0;
+            while (i < platformObjects.Count - 1 && random1 < platformObjects[i].appearRatio)
+            {
+                i++;
+                random1 -= platformObjects[i].appearRatio;
+            }
+            int random2 = Random.Range(0, probabilityTotal);
+            int j = 0;
+            while (j < platformObjects.Count - 1 && random2 < platformObjects[i].appearRatio)
+            {
+                j++;
+                random2 -= platformObjects[j].appearRatio;
+            }
+            createBranchPlatform(platformObjects[j], platformObjects[i], platformMoveSpeed);
+            isBranch = true;
+            
+        }
+        
+
     }
 
-}
+    private void createBranchPlatform(PlatformObject p1, PlatformObject p2, float s)
+    {
+        bool aPlatformIsMoving = false;
+        foreach (Platform pf in platformList)
+        {
+            if (pf.isMoving)
+            {
+                aPlatformIsMoving = true;
+            }
+            //aPlatformIsMoving = pf.isMoving;
+        }
+        //while(aPlatformIsMoving);
+        if (!aPlatformIsMoving && !isPaused)
+        {
+            Platform platform1 = (Platform)Get();
+            Platform platform2 = (Platform)Get();
+
+            if (platformList.Count != 0)
+            {
+
+                foreach (Platform pf in platformList)
+                {
+                    //Debug.Log(pf.name);
+                    pf.Move(s);
+                }
+                foreach (Platform pf in rightBranchQueue)
+                {
+                    //Debug.Log(pf.name);
+                    pf.Move(s);
+                }
+                foreach (Platform pf in leftBranchQueue)
+                {
+                    //Debug.Log(pf.name);
+                    pf.Move(s);
+                }
+            }
+
+            if (usedSlots == maxPlatformNumber)
+            {
+
+                platformList.Dequeue().Move(s);
+                usedSlots--;
+            }
+            platform1.branchPosition = 0;
+            platform2.branchPosition = 1;
+            platform1.Load(p1);
+            platform1.gameObject.transform.position += new Vector3(0f, 0f, 1f);
+            platform2.gameObject.transform.position += new Vector3(0f, 0f, -1f);
+            platform2.Load(p2);
+
+            platform1.OnCreate(s);
+            platform2.OnCreate(s);
+            leftBranchQueue.Enqueue(platform1);
+            rightBranchQueue.Enqueue(platform2);
+            usedSlots++;
+
+
+        }
+    }
+
+    public void chooseBranch(int branch)
+    {
+        
+        if(branch == 1)
+        {
+            //Debug.Log("derecho");
+            foreach (Platform pf in rightBranchQueue)
+            {
+                //Debug.Log(pf.name);
+                pf.MoveRight();
+            }
+            //Debug.Log("izquierdo");
+            foreach (Platform pf in leftBranchQueue)
+            {
+                //Debug.Log(pf.name);
+                pf.MoveRight();
+            }
+            isBranch = false;
+
+            while (rightBranchQueue.Count > 0)
+            {
+
+                platformList.Enqueue(rightBranchQueue.Dequeue());
+            }
+
+            while (leftBranchQueue.Count > 0)
+            {
+                leftBranchQueue.Dequeue();
+            }
+            //Debug.Log(platformList.ToString());
+        }
+        else if(branch == 0)
+        {
+            foreach (Platform pf in rightBranchQueue)
+            {
+                //Debug.Log(pf.name);
+                pf.MoveLeft();
+            }
+            foreach (Platform pf in leftBranchQueue)
+            {
+                //Debug.Log(pf.name);
+                pf.MoveLeft();
+            }
+            isBranch = false;
+            while (leftBranchQueue.Count > 0)
+            {
+                platformList.Enqueue(leftBranchQueue.Dequeue());
+            }
+            //leftBranchQueue.Clear();
+            while (rightBranchQueue.Count > 0)
+            {
+                rightBranchQueue.Dequeue();
+            }
+            //rightBranchQueue.Clear();
+            //Debug.Log(platformList.ToString());
+        }
+    }
+
+    }
 
