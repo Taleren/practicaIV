@@ -5,11 +5,12 @@ using UnityEngine.Pool;
 
 public class ResourceUI : MonoBehaviour
 {
+    //observador
     public Resource resource;   //Recurso asociado
     public ResourceObjectPool objectPool;   //pool
     public Transform container; //Contenedor de los iconos
 
-    
+    /*
 
     private void Start()
     {
@@ -42,5 +43,5 @@ public class ResourceUI : MonoBehaviour
             GameObject icon = objectPool.Get();
             icon.transform.SetParent(container, false);
         }
-    }
+    }*/
 }

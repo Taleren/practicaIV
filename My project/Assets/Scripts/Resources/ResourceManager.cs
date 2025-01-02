@@ -8,7 +8,10 @@ public class ResourceManager : MonoBehaviour
     //public EventHandler<float>ResourceChanged;
 
     public static ResourceManager instance;
-    public List<Resource> resources = new List<Resource>();
+    //public List<Resource> resources = new List<Resource>();
+
+    public ResourceObjectPool beerPool;
+    public ResourceObjectPool cigarPool;
 
     //Delegado y evento para observer
     public delegate void ResourceChanged(string resourceType, int newAmount);
@@ -25,13 +28,13 @@ public class ResourceManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (resources.Count == 0)
-        {
-            // Inicializar los recursos por defecto (Beer, Cigarette, etc.)
-            resources.Add(new Resource("Beer", 0));
-            resources.Add(new Resource("Cigar", 0));
-        }
+        cigarPool.AddCount(5);
 
+        Debug.Log(cigarPool.GetCount());
+
+        beerPool.AddCount(5);
+        
+        Debug.Log(beerPool.GetCount());
 
     }
 
@@ -39,35 +42,37 @@ public class ResourceManager : MonoBehaviour
 
     public void AddResource(string resourceName, int amount)
     {
-        Resource resource = resources.Find(r => r.resourceType == resourceName);
-        if (resource!= null) //no estoy segura xd
-        {
-            Debug.Log($"Agregando {amount} al recurso: {resourceName}");
-            resource.AddCount(amount);
 
-            //Notificar a los observers
-            OnResourceChanged?.Invoke(resourceName, resource.count);
+        if (resourceName == "Beer")
+        {
+            beerPool.AddCount(amount);
+            Debug.Log($"Agregando {amount} al recurso: {resourceName}");
+        }
+        else if (resourceName == "Cigar")
+        {
+            cigarPool.AddCount(amount);
+            Debug.Log($"Agregando {amount} al recurso: {resourceName}");
         }
 
         else
         {
             Debug.LogWarning($"Recurso no encontrado: {resourceName}");
         }
-
-
     }
 
     public void RemoveResource(string resourceName, int amount) 
     {
-        Resource resource = resources.Find(r => r.resourceType == resourceName);
-        if (resource != null)
+        if (resourceName == "Beer")
         {
-            Debug.Log($"Quitando {amount} del recurso: {resourceName}");
-            resource.SubtractCount(amount);
-            //Notificar a los observers
-            OnResourceChanged?.Invoke(resourceName, resource.count);
-
+            beerPool.SubtractCount(amount);
+            Debug.Log($"Agregando {amount} al recurso: {resourceName}");
         }
+        if (resourceName == "Cigar")
+        {
+            cigarPool.SubtractCount(amount);
+            Debug.Log($"Agregando {amount} al recurso: {resourceName}");
+        }
+
         else
         {
             Debug.LogWarning($"Recurso no encontrado: {resourceName}");
@@ -76,7 +81,15 @@ public class ResourceManager : MonoBehaviour
 
     public int GetResourceCount(string resourceName)
     {
-        Resource resource = resources.Find(r => r.resourceType == resourceName);
-        return resource!= null ? resource.count : 0;
+        int count = 0;  
+        if (resourceName == "Beer")
+        {
+            count = beerPool.GetCount();
+        }
+        if (resourceName == "Cigar")
+        {
+            count = cigarPool.GetCount();
+        }
+        return count;
     }
 }

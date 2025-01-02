@@ -2,37 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Resource : MonoBehaviour
+public class Resource :  MonoBehaviour, IPooleableObject
 {
     public string resourceType; //Cerveza o cigarro
-    public int count;           //Cantidad actual del recurso
-    //public int maxCount;        //Cantidad máxima
+    //public int count;           //Cantidad actual del recurso
+    //public int maxCount;      //Cantidad máxima
 
     public Resource(string name, int initialCount)
     {
         resourceType = name;
-        count = initialCount;
+        //count = initialCount;
     }
 
     public delegate void ResourceUpdated();
     public event ResourceUpdated OnResourceUpdated;
 
-    public void SetCount(int newCount)
+    
+
+
+    public bool Active
     {
-        count = newCount;
-        OnResourceUpdated?.Invoke(); //Notificar de cabios
+        get
+        {
+            return gameObject.activeSelf;
+        }
+
+        set
+        {
+            gameObject.SetActive(value);
+        }
     }
 
-    public void AddCount(int amount)
+    public void Reset()
     {
-        Debug.Log($"Cantidad actual del recurso {resourceType}: {count}");
-        SetCount(count + amount);
+        transform.localPosition = Vector3.zero;
     }
-
-    public void SubtractCount(int amount)
-    {
-        SetCount(count - amount);
-    }
-
-    public int GetCount() => count; //Devuelve count
 }
