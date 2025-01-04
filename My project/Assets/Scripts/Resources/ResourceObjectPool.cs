@@ -5,11 +5,15 @@ using UnityEngine;
 public class ResourceObjectPool : MonoBehaviour
 {
     public GameObject prefab;
+    public GameObject container;
+
     public int poolInitialSize = 10; //Tamaño inicial del pool
     int activeResources = 0;
 
     private List<IPooleableObject> resourcePool = new List<IPooleableObject>();
     private Stack<IPooleableObject> resourceStack = new Stack<IPooleableObject>();
+
+    
 
     private void Awake()
     {
@@ -17,6 +21,8 @@ public class ResourceObjectPool : MonoBehaviour
         for (int i = 0; i<poolInitialSize; i++)
         {
             GameObject obj = Instantiate(prefab);
+            obj.transform.SetParent(container.transform, false);
+
             IPooleableObject resource = obj.GetComponent<IPooleableObject>();
             resource.Active = false;
             resourcePool.Add(resource);   //Meter en el stack uno
@@ -69,8 +75,13 @@ public class ResourceObjectPool : MonoBehaviour
         {
             if(resourceStack.Count > amount)
             {
-                resourceStack.Pop(); 
+                IPooleableObject resource = resourceStack.Pop();
+                Release(resource);
                 Debug.Log("Recurso quitado del stack");
+
+                //UI
+                //GameObject cigarro = Instantiate(prefab);
+                //cigarro.transform.SetParent(container.transform, false);
             }
 
             else

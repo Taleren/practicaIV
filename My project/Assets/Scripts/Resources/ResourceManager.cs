@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class ResourceManager : MonoBehaviour
 {
-    //ES EL SUJETO DEL OBSERVER
-    //public EventHandler<float>ResourceChanged;
+
 
     public static ResourceManager instance;
     //public List<Resource> resources = new List<Resource>();
@@ -29,6 +28,7 @@ public class ResourceManager : MonoBehaviour
         }
 
         cigarPool.AddCount(5);
+        //AddResource("Beer", 5);
 
         Debug.Log(cigarPool.GetCount());
 
@@ -65,12 +65,12 @@ public class ResourceManager : MonoBehaviour
         if (resourceName == "Beer")
         {
             beerPool.SubtractCount(amount);
-            Debug.Log($"Agregando {amount} al recurso: {resourceName}");
+            Debug.Log($"Quitando {amount} al recurso: {resourceName}");
         }
         if (resourceName == "Cigar")
         {
             cigarPool.SubtractCount(amount);
-            Debug.Log($"Agregando {amount} al recurso: {resourceName}");
+            Debug.Log($"Quitando {amount} al recurso: {resourceName}");
         }
 
         else
