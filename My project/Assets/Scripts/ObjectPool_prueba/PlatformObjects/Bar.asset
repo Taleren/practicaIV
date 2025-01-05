@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2c2dda62a9e3b67478905f10424c8680, type: 3}
-  m_Name: newPlatform
+  m_Name: Bar
   m_EditorClassIdentifier: 
-  name: plataforma morada:3
-  appearRatio: 100
-  platformEvent: 0
+  name: bar
+  appearRatio: 5
+  platformEvent: 2
+  model: {fileID: -5646967605923803700, guid: f1da7e268c2f9f04c91b99a7915ebd7c, type: 3}

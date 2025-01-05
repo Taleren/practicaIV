@@ -25,4 +25,6 @@ public class PlatformObject : ScriptableObject
     //int platformType;
 
     public platformEventEnum platformEvent;
+
+    public Mesh model;
 }

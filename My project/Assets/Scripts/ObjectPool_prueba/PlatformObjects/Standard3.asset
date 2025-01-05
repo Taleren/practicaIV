@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2c2dda62a9e3b67478905f10424c8680, type: 3}
-  m_Name: GreenPlatform
+  m_Name: Standard3
   m_EditorClassIdentifier: 
-  name: green
-  appearRatio: 5
-  platformEvent: 2
+  name: standard3
+  appearRatio: 25
+  platformEvent: 0
+  model: {fileID: -7351891858221894128, guid: 3f0f08c328e216f4498def1ef74e149b, type: 3}

@@ -13,6 +13,10 @@ public class PlatformLoader : MonoBehaviour, IObjectPool
     [SerializeField] private GameObject platformParent;
     [SerializeField] private float branchProbability;
 
+
+    public GameObject player;
+    Animator playerAnim;
+
     private float currentBranchProbability;
     public bool isPaused = false;
     private List<Platform> poolablePlatforms = new List<Platform>(); 
@@ -46,6 +50,8 @@ public class PlatformLoader : MonoBehaviour, IObjectPool
         currentBranchProbability = branchProbability;
         poolablePlatforms.Add(platformPrefab.GetComponent<Platform>());
         platformPrefab.GetComponent<Platform>().Active = false;
+        playerAnim = player.GetComponent<Animator>();
+
         for (int i = 0; i < totalPoolSize-1; i++)
         {
             poolablePlatforms.Add(platformPrefab.GetComponent<Platform>().Clone(platformParent));
@@ -160,6 +166,7 @@ public class PlatformLoader : MonoBehaviour, IObjectPool
 
     public void createRandomPlatform()
     {
+        playerAnim.Play("PlayerMove");
         int isBranched = Random.Range(0, 100);
         if(isBranched > branchProbability && !isBranch)
         {

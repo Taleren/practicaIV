@@ -61,6 +61,7 @@ public class Platform : MonoBehaviour, IPooleableObject
     public void Load(PlatformObject po)
     {
         name = po.name;
+        this.gameObject.GetComponentInChildren<MeshFilter>().mesh = po.model;
         //colorTest = po.colorTest;
         //eventTest = po.eventTest;
         //print("Plataforma cargada: " + name + "\n");
