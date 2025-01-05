@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Unlit
+  m_Name: White
   m_Shader: {fileID: -6465566751694194690, guid: bc4ad12482d3c434eb428bd45d2693b3,
     type: 3}
   m_Parent: {fileID: 0}
@@ -51,10 +51,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Alpha: 1.46
+    - _Alpha: 0.52
     - _QueueControl: 0
     - _QueueOffset: 0
     - _VanishFactor: 1
     m_Colors:
-    - _Color: {r: 0.509434, g: 0.509434, b: 0.509434, a: 0}
+    - _Color: {r: 0.3660378, g: 0.3660378, b: 0.3660378, a: 0}
   m_BuildTextureStacks: []

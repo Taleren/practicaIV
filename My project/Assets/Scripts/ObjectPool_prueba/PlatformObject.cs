@@ -13,7 +13,8 @@ public class PlatformObject : ScriptableObject
     {
         standard,
         testDialogue,
-        barDialogue
+        barDialogue,
+        smokeDialogue
     };
 
     public string name;
@@ -27,4 +28,6 @@ public class PlatformObject : ScriptableObject
     public platformEventEnum platformEvent;
 
     public Mesh model;
+
+    public Mesh npc;
 }

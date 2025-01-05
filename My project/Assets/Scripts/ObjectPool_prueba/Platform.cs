@@ -12,12 +12,16 @@ public class Platform : MonoBehaviour, IPooleableObject
     //[SerializeField] private Color32 colorTest;
     //[SerializeField] private string eventTest;
     [SerializeField] public PlatformLoader platformLoader;
-    
+    [SerializeField] private Material material;
+
     public GameObject canvas;
 
     public IEvent platformEvent;
 
     public bool isMoving;
+
+    private GameObject model;
+    private GameObject npc;
 
     public int currentPosition;
     private int maxPlatformNumber;
@@ -30,12 +34,16 @@ public class Platform : MonoBehaviour, IPooleableObject
 
     void Awake()
     {
-        initialScale = gameObject.transform.localScale;
+        model = gameObject.transform.GetChild(0).gameObject;
+        npc = gameObject.transform.GetChild(1).gameObject;
+
+        //npc.GetComponent<Animator>().Play("breathe");
+        initialScale = model.transform.localScale;
         initialColor.a = highlightedColor.a = 255;
         initialColor.r = initialColor.g = initialColor.b = 138;
         highlightedColor.r = highlightedColor.b = highlightedColor.g = 180;
         maxPlatformNumber = platformLoader.maxPlatformNumber;
-
+        
 
     }
     void Start()
@@ -61,7 +69,17 @@ public class Platform : MonoBehaviour, IPooleableObject
     public void Load(PlatformObject po)
     {
         name = po.name;
-        this.gameObject.GetComponentInChildren<MeshFilter>().mesh = po.model;
+        model.GetComponent<MeshFilter>().mesh = po.model;
+        model.GetComponent<MeshRenderer>().material = material;
+        MaterialPropertyBlock propertyBlock = new MaterialPropertyBlock();
+        propertyBlock.SetColor("_Color", initialColor);
+        model.GetComponent<MeshRenderer>().SetPropertyBlock(propertyBlock);
+        if (po.npc != null)
+        {
+            npc.GetComponent<MeshFilter>().mesh = po.npc;
+            npc.SetActive(true);
+            npc.GetComponent<Animator>().Play("breathe");
+        }
         //colorTest = po.colorTest;
         //eventTest = po.eventTest;
         //print("Plataforma cargada: " + name + "\n");
@@ -78,6 +96,9 @@ public class Platform : MonoBehaviour, IPooleableObject
             case PlatformObject.platformEventEnum.barDialogue:
                 platformEvent = new BarEvent(this);
                 break;
+            case PlatformObject.platformEventEnum.smokeDialogue:
+                platformEvent = new SmokeEvent(this);
+                break;
         }
         //MaterialPropertyBlock propertyBlock = new MaterialPropertyBlock();
         //propertyBlock.SetColor("_Color", colorTest);
@@ -92,22 +113,24 @@ public class Platform : MonoBehaviour, IPooleableObject
         gameObject.transform.position += new Vector3(0f, -4f, 0f);
         StartCoroutine("GoIn", s);
 
+        
         int random = Random.Range(0, 4);
         switch (random)
         {
             case 0:
-                gameObject.transform.eulerAngles = new Vector3(-90f, 0f, 0f);
+                model.transform.eulerAngles = new Vector3(-90f, 0f, 0f);
                 break;
             case 1:
-                gameObject.transform.eulerAngles = new Vector3(-90f, 90f, 0f);
+                model.transform.eulerAngles = new Vector3(-90f, 90f, 0f);
                 break;
             case 2:
-                gameObject.transform.eulerAngles = new Vector3(-90f, 180f, 0f);
+                model.transform.eulerAngles = new Vector3(-90f, 180f, 0f);
                 break;
             case 3:
-                gameObject.transform.eulerAngles = new Vector3(-90f, 270f, 0f);
+                model.transform.eulerAngles = new Vector3(-90f, 270f, 0f);
                 break;
         }
+        
     }
 
     public void Move(float s)
@@ -191,20 +214,20 @@ public class Platform : MonoBehaviour, IPooleableObject
     
     private void OnMouseExit()
     {
-        gameObject.transform.localScale = initialScale;
+        model.transform.localScale = initialScale;
         MaterialPropertyBlock propertyBlock = new MaterialPropertyBlock();
         propertyBlock.SetColor("_Color", initialColor);
-        this.GetComponentInChildren<MeshRenderer>().SetPropertyBlock(propertyBlock);
+        model.GetComponent<MeshRenderer>().SetPropertyBlock(propertyBlock);
     }
 
     private void OnMouseOver()
     {
         if (isClickable)
         {
-            gameObject.transform.localScale = initialScale + new Vector3(.2f, .2f, .2f);
+            model.transform.localScale = initialScale + new Vector3(.2f, .2f, .2f);
             MaterialPropertyBlock propertyBlock = new MaterialPropertyBlock();
             propertyBlock.SetColor("_Color", highlightedColor);
-            this.GetComponentInChildren<MeshRenderer>().SetPropertyBlock(propertyBlock);
+            model.GetComponent<MeshRenderer>().SetPropertyBlock(propertyBlock);
             if (Input.GetMouseButtonDown(0))
             {
                 switch(branchPosition)

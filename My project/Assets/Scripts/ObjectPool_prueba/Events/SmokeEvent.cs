@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class BarEvent : IEvent
+public class SmokeEvent : IEvent
 {
     //public Platform platform;
     private Platform platform;
@@ -11,11 +11,11 @@ public class BarEvent : IEvent
     private TMP_Text dialogueTextbox;
     private TMP_Text nameTextbox;
     private TMP_Text buttonATextbox;
+    private TMP_Text bottomText;
     private TMP_Text buttonBTextbox;
     private Button buttonA;
     private Button buttonB;
-    private TMP_Text bottomText;
-    public BarEvent(Platform p)
+    public SmokeEvent(Platform p)
     {
         platform = p;
     }
@@ -25,6 +25,7 @@ public class BarEvent : IEvent
     {
         //Debug.Log("-1 cerveza por puta");
         dialogueUI = platform.canvas.transform.GetChild(0).gameObject;
+
         dialogueUI.SetActive(true);
         foreach (Transform g in dialogueUI.GetComponentsInChildren<Transform>(true))
         {
@@ -42,10 +43,10 @@ public class BarEvent : IEvent
         buttonB.SetPlatformEvent(this);
 
         bottomText.gameObject.SetActive(false);
-        dialogueTextbox.text = "es un bar esto";
-        buttonATextbox.text = "dame cerveza";
-        buttonBTextbox.text = "manos arriba";
-        nameTextbox.text = "barman";
+        dialogueTextbox.text = "Hola, forastero... El gran oráculo me narra tu futuro, y en él hay un cigarro de la mejor calidad.\nEcha un vistazo, siempre llevo el mejor género, apenas lleva plomo";
+        buttonATextbox.text = "";
+        buttonBTextbox.text = "Me vendría bien un paquete";
+        nameTextbox.text = "Lluvia Repentina";
 
     }
 
@@ -56,6 +57,7 @@ public class BarEvent : IEvent
         {
             g.gameObject.SetActive(false);
         }
+        //dialogueUI.SetActive(false);
         dialogueUI.SetActive(true);
         bottomText.gameObject.SetActive(true);
         bottomText.gameObject.GetComponent<Animator>().Play("fade");
@@ -68,12 +70,11 @@ public class BarEvent : IEvent
         {
             case 0:
                 //Debug.Log("cerveza");
-                bottomText.text = "cervezo";
                 endEvent();
                 break;
             case 1:
+                bottomText.text = "Lluvia Repentina compartió su tabaco contigo.";
                 //Debug.Log("atraco");
-                bottomText.text = "atraco";
                 endEvent();
                 break;
         }

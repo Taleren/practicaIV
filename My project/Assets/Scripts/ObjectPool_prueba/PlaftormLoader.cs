@@ -172,11 +172,13 @@ public class PlatformLoader : MonoBehaviour, IObjectPool
         {
             int random = Random.Range(0, probabilityTotal);
             int i = 0;
-            while (i < platformObjects.Count - 1 && random < platformObjects[i].appearRatio)
+            while (i < platformObjects.Count - 1 && random > platformObjects[i].appearRatio)
             {
-                i++;
+                
                 random -= platformObjects[i].appearRatio;
+                i++;
             }
+            //Mathf.Clamp(i, 1, platformObjects.Count);
             createPlatform(platformObjects[i], platformMoveSpeed);
             
         }
@@ -184,18 +186,22 @@ public class PlatformLoader : MonoBehaviour, IObjectPool
         {
             int random1 = Random.Range(0, probabilityTotal);
             int i = 0;
-            while (i < platformObjects.Count - 1 && random1 < platformObjects[i].appearRatio)
+            while (i < platformObjects.Count - 1 && random1 > platformObjects[i].appearRatio)
             {
-                i++;
+                
                 random1 -= platformObjects[i].appearRatio;
+                i++;
             }
             int random2 = Random.Range(0, probabilityTotal);
             int j = 0;
-            while (j < platformObjects.Count - 1 && random2 < platformObjects[i].appearRatio)
+            while (j < platformObjects.Count - 1 && random2 > platformObjects[i].appearRatio)
             {
-                j++;
+                
                 random2 -= platformObjects[j].appearRatio;
+                j++;
             }
+            //Mathf.Clamp(j, 1, platformObjects.Count);
+            //Mathf.Clamp(i, 1, platformObjects.Count);
             createBranchPlatform(platformObjects[j], platformObjects[i], platformMoveSpeed);
             isBranch = true;
             
