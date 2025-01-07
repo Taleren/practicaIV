@@ -12,6 +12,7 @@ public class PlatformLoader : MonoBehaviour, IObjectPool
     [SerializeField] private GameObject platformPrefab;
     [SerializeField] private GameObject platformParent;
     [SerializeField] private float branchProbability;
+    [SerializeField] private Material fullscreenMat;
 
 
     public GameObject player;
@@ -39,6 +40,8 @@ public class PlatformLoader : MonoBehaviour, IObjectPool
 
     bool canClick;
 
+    float distortion = 0;
+
     private void Awake()
     {
         
@@ -47,6 +50,7 @@ public class PlatformLoader : MonoBehaviour, IObjectPool
     // Start is called before the first frame update
     void Start()
     {
+        fullscreenMat.SetFloat("_distortionBlend", distortion);
         currentBranchProbability = branchProbability;
         poolablePlatforms.Add(platformPrefab.GetComponent<Platform>());
         platformPrefab.GetComponent<Platform>().Active = false;
@@ -166,6 +170,8 @@ public class PlatformLoader : MonoBehaviour, IObjectPool
 
     public void createRandomPlatform()
     {
+        distortion += 0.01f;
+        fullscreenMat.SetFloat("_distortionBlend", distortion);
         playerAnim.Play("PlayerMove");
         int isBranched = Random.Range(0, 100);
         if(isBranched > branchProbability && !isBranch)
