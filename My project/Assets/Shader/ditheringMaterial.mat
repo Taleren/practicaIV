@@ -39,9 +39,13 @@ Material:
     m_Ints: []
     m_Floats:
     - _ColorResolution: 8
+    - _distorsionNoiseScale: 4.98
+    - _distortionAmplitude: 5
+    - _distortionBlend: 0.04
     - _dither: 1.29
     - _solidThreshold: 0.95
     m_Colors:
     - _Color1: {r: 0.7484276, g: 0, b: 0, a: 1}
     - _Color2: {r: 0, g: 0, b: 0, a: 0}
+    - _distortionSpeed: {r: 1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

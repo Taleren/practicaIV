@@ -306,6 +306,7 @@ MonoBehaviour:
   platformPrefab: {fileID: 280180485}
   platformParent: {fileID: 1751862448}
   branchProbability: 15
+  fullscreenMat: {fileID: 2100000, guid: 40b8b51b702e73348a0ecc607d5d55df, type: 2}
   player: {fileID: 1845315417}
   isPaused: 0
   usedSlots: 0
