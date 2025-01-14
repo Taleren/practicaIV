@@ -80,11 +80,6 @@ public class Platform : MonoBehaviour, IPooleableObject
             npc.SetActive(true);
             npc.GetComponent<Animator>().Play("breathe");
         }
-        //colorTest = po.colorTest;
-        //eventTest = po.eventTest;
-        //print("Plataforma cargada: " + name + "\n");
-        //print("Evento iniciado: " + eventTest + "\n");
-        //platformEvent = po.platformEvent;
         switch (po.platformEvent)
         {
             case PlatformObject.platformEventEnum.standard:
@@ -100,9 +95,6 @@ public class Platform : MonoBehaviour, IPooleableObject
                 platformEvent = new SmokeEvent(this);
                 break;
         }
-        //MaterialPropertyBlock propertyBlock = new MaterialPropertyBlock();
-        //propertyBlock.SetColor("_Color", colorTest);
-        //this.GetComponentInChildren<MeshRenderer>().SetPropertyBlock(propertyBlock);
 
 
     }

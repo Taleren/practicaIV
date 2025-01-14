@@ -6,7 +6,7 @@ public class ResourceManager : MonoBehaviour
 {
 
 
-    public static ResourceManager instance;
+    //public static ResourceManager instance;
     //public List<Resource> resources = new List<Resource>();
 
     public ResourceObjectPool beerPool;
@@ -18,6 +18,7 @@ public class ResourceManager : MonoBehaviour
 
     private void Awake()
     {
+        /*
         if (instance == null)
         {
             instance = this;
@@ -26,6 +27,7 @@ public class ResourceManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        */
 
         cigarPool.AddCount(5);
         //AddResource("Beer", 5);

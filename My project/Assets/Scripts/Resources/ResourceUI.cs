@@ -5,6 +5,7 @@ using UnityEngine.Pool;
 
 public class ResourceUI : MonoBehaviour
 {
+    /*
     //observador
     public Resource resource;   //Recurso asociado
     public ResourceObjectPool objectPool;   //pool
