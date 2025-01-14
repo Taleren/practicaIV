@@ -177,7 +177,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 5
+  m_Spacing: 1
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -580,7 +580,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 539d5634b9e4aa94e9405236ca15c731,
+      objectReference: {fileID: 21300000, guid: bbd574ff649757d4aa388911d6e2c457,
         type: 3}
     - target: {fileID: 7141949898351819087, guid: be338a9846eda664ca78b03c9d93613e,
         type: 3}
@@ -1865,7 +1865,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 100, y: 0}
+  m_AnchoredPosition: {x: 80, y: 50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1936623747
@@ -1885,8 +1885,8 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
-  m_Spacing: 5
+  m_ChildAlignment: 5
+  m_Spacing: 1
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -1959,6 +1959,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 299102786}
     m_Modifications:
+    - target: {fileID: 6269691116948072622, guid: be338a9846eda664ca78b03c9d93613e,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 4ed896acf209316499485d1ab31a72d5,
+        type: 3}
+    - target: {fileID: 6269691116948072622, guid: be338a9846eda664ca78b03c9d93613e,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7141949898351819087, guid: be338a9846eda664ca78b03c9d93613e,
         type: 3}
       propertyPath: m_Name

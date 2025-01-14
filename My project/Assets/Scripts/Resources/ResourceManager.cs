@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResourceManager : MonoBehaviour
+public class ResourceManager : MonoBehaviour, IObserver
 {
+    //OBSERVER:
+    public void Notify(string notif)
+    {
+        Debug.Log(notif);
+    }
 
 
-    //public static ResourceManager instance;
-    //public List<Resource> resources = new List<Resource>();
 
     public ResourceObjectPool beerPool;
     public ResourceObjectPool cigarPool;
@@ -18,16 +21,7 @@ public class ResourceManager : MonoBehaviour
 
     private void Awake()
     {
-        /*
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else if (instance !=this)
-        {
-            Destroy(gameObject);
-        }
-        */
+
 
         cigarPool.AddCount(5);
         //AddResource("Beer", 5);

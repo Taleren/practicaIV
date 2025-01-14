@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEditor.Experimental.RestService;
 using UnityEngine;
 
-public class PlatformLoader : MonoBehaviour, IObjectPool
+public class PlatformLoader : MonoBehaviour, IObjectPool, ISubject
 {
     //public static PlatformLoader Instance;
 
@@ -33,6 +33,7 @@ public class PlatformLoader : MonoBehaviour, IObjectPool
     private Queue<Platform> platformList = new Queue<Platform>();
     private Queue<Platform> leftBranchQueue = new Queue<Platform>();
     private Queue<Platform> rightBranchQueue = new Queue<Platform>();
+
 
     Vector3 lastPlatformPos = new Vector3(6.0999999f,-4f, -0.14738825f);
 
@@ -334,5 +335,26 @@ public class PlatformLoader : MonoBehaviour, IObjectPool
         }
     }
 
+    //Patrón observer
+    private List<IObserver> observerList = new List<IObserver>();
+
+    public void NotifyObservers()
+    {
+        for(int i = 0; i< observerList.Count; i++)
+        {
+            observerList[i].Notify("pimba recurso creao");
+        }
     }
+    public void RemoveObserver(IObserver observer)
+    {
+        observerList.Remove(observer);
+    }
+    public void AddObserver(IObserver observer)
+    {
+        observerList.Add(observer);
+
+    }
+
+
+}
 

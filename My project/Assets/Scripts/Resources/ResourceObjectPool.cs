@@ -7,7 +7,7 @@ public class ResourceObjectPool : MonoBehaviour
     public GameObject prefab;
     public GameObject container;
 
-    public int poolInitialSize = 10; //Tamaño inicial del pool
+    public int poolInitialSize = 3; //Tamaño inicial del pool
     int activeResources = 0;
 
     private List<IPooleableObject> resourcePool = new List<IPooleableObject>();
@@ -66,6 +66,7 @@ public class ResourceObjectPool : MonoBehaviour
         {
             resourceStack.Push(Get());
             Debug.Log("Recurso añadido al stack");
+            activeResources++;
         }
     }
 
@@ -73,7 +74,7 @@ public class ResourceObjectPool : MonoBehaviour
     {
         for (int i = 0; i < amount; i++)
         {
-            if(resourceStack.Count > amount)
+            if(resourceStack.Count >= amount)
             {
                 IPooleableObject resource = resourceStack.Pop();
                 Release(resource);

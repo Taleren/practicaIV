@@ -41,7 +41,7 @@ Material:
     - _ColorResolution: 8
     - _distorsionNoiseScale: 4.98
     - _distortionAmplitude: 5
-    - _distortionBlend: 0.02
+    - _distortionBlend: 0.08999999
     - _dither: 1.29
     - _solidThreshold: 0.95
     m_Colors:
