@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.RestService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlatformLoader : MonoBehaviour, IObjectPool, ISubject<ResourceQuantity>
 {
@@ -14,12 +16,15 @@ public class PlatformLoader : MonoBehaviour, IObjectPool, ISubject<ResourceQuant
     [SerializeField] private GameObject platformParent;
     [SerializeField] private float branchProbability;
     [SerializeField] private Material fullscreenMat;
+    [SerializeField] private GameObject endGame;
 
     public int beerInitialCount;
     public int cigarInitialCount;
     private int beerCount;
     private int cigarCount;
-    float drunkCounter = 0;
+    private int totalBeer=0;
+    private int totalCigar=0;
+    public float drunkCounter = 0;
 
     public GameObject player;
     Animator playerAnim;
@@ -28,6 +33,7 @@ public class PlatformLoader : MonoBehaviour, IObjectPool, ISubject<ResourceQuant
 
     private float currentBranchProbability;
     public bool isPaused = false;
+    bool isEnded = false;
     private List<Platform> poolablePlatforms = new List<Platform>(); 
     int activePlatforms = 0;
     int totalPoolSize = 12;
@@ -110,7 +116,10 @@ public class PlatformLoader : MonoBehaviour, IObjectPool, ISubject<ResourceQuant
         {
             //canClick = true;
         }
-
+        if(isEnded && Input.GetKeyDown("space"))
+        {
+            SceneManager.LoadScene("Menu");
+        }
        
     }
 
@@ -235,7 +244,7 @@ public class PlatformLoader : MonoBehaviour, IObjectPool, ISubject<ResourceQuant
         }
         else if (pathCounter == maxPathCounter)
         {
-            createPlatform(platformObjects[0], platformMoveSpeed);
+            createPlatform(endPlatform, platformMoveSpeed);
             pathCounter++;
             playerAnim.Play("PlayerMove");
         }
@@ -438,8 +447,13 @@ public class PlatformLoader : MonoBehaviour, IObjectPool, ISubject<ResourceQuant
     {
         beerCount -= quantity;
         drunkCounter += 0.01f * quantity;
+        totalBeer += quantity;
         fullscreenMat.SetFloat("_distortionBlend", drunkCounter);
         NotifyObservers(0, -quantity);
+        if (beerCount <= 0)
+        {
+            EndGame(false);
+        }
 
     }
 
@@ -447,19 +461,54 @@ public class PlatformLoader : MonoBehaviour, IObjectPool, ISubject<ResourceQuant
     {
         cigarCount -= quantity;
         drunkCounter = 0;
+        totalCigar += quantity;
         fullscreenMat.SetFloat("_distortionBlend", drunkCounter);
         NotifyObservers(1, -quantity);
+        if (cigarCount <= 0)
+        {
+            EndGame(false);
+        }
     }
 
     public void AddBeer(int quantity)
     {
         beerCount += quantity;
         NotifyObservers(0, quantity);
+        if (beerCount <= 0)
+        {
+            EndGame(false);
+        }
     }
     public void AddCigar(int quantity)
     {
         cigarCount += quantity;
         NotifyObservers(1, quantity);
+        if(cigarCount <= 0) 
+        {
+            EndGame(false);
+        } 
+    }
+
+    public void EndGame(bool win)
+    {
+        endGame.SetActive(true);
+        isPaused = true;
+        isEnded = true;
+        TMP_Text gameOver = endGame.GetComponentsInChildren<TMP_Text>()[0];
+        TMP_Text pathText = endGame.GetComponentsInChildren<TMP_Text>()[1];
+        TMP_Text beerText = endGame.GetComponentsInChildren<TMP_Text>()[2];
+        TMP_Text cigarText = endGame.GetComponentsInChildren<TMP_Text>()[3];
+        pathText.text = "Has recorrido " + pathCounter.ToString() + " casillas.";
+        beerText.text = "Has bebido " + totalBeer.ToString() + " cervezas.";
+        cigarText.text = "Has fumado " + totalCigar.ToString() + " cigarros.";
+        if(win)
+        {
+            gameOver.text = "¡LO LOGRASTE!";
+        }
+        else
+        {
+            gameOver.text = "GAME OVER";
+        }
     }
 
 }

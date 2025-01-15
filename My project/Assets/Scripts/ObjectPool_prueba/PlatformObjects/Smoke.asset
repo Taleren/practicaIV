@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Smoke
   m_EditorClassIdentifier: 
   name: smoke
-  appearRatio: 5
+  appearRatio: 2
   platformEvent: 3
   model: {fileID: -7351891858221894128, guid: 3f0f08c328e216f4498def1ef74e149b, type: 3}
   npc: {fileID: -1550514412580984892, guid: 06c31c47666bbe34ba71412635e7c603, type: 3}

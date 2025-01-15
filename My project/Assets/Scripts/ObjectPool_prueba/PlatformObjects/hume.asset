@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2c2dda62a9e3b67478905f10424c8680, type: 3}
-  m_Name: end
+  m_Name: hume
   m_EditorClassIdentifier: 
-  name: end
-  appearRatio: 25
-  platformEvent: 4
-  model: {fileID: 199474277128902238, guid: f7a5ee3fa565f1146bb0b3aef25caa74, type: 3}
-  npc: {fileID: 0}
+  name: hume
+  appearRatio: 5
+  platformEvent: 8
+  model: {fileID: 3199932612535789731, guid: fdbbdbcc89442e54fb21a8310e0f3986, type: 3}
+  npc: {fileID: -7906206132131693667, guid: 43ee712f09baa9b4f8e2990b1606005d, type: 3}

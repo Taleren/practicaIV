@@ -80,6 +80,10 @@ public class Platform : MonoBehaviour, IPooleableObject
             npc.SetActive(true);
             npc.GetComponent<Animator>().Play("breathe");
         }
+        else
+        {
+            npc.SetActive(false);
+        }
         switch (po.platformEvent)
         {
             case PlatformObject.platformEventEnum.standard:
@@ -93,6 +97,24 @@ public class Platform : MonoBehaviour, IPooleableObject
                 break;
             case PlatformObject.platformEventEnum.smokeDialogue:
                 platformEvent = new SmokeEvent(this);
+                break;
+            case PlatformObject.platformEventEnum.endEvent:
+                platformEvent = new EndEvent(this);
+                break;
+            case PlatformObject.platformEventEnum.mikeEvent:
+                platformEvent = new MikeEvent(this);
+                break;
+            case PlatformObject.platformEventEnum.sheriffEvent:
+                platformEvent = new SheriffEvent(this);
+                break;
+            case PlatformObject.platformEventEnum.shellyEvent:
+                platformEvent = new ShellyEvent(this);
+                break;
+            case PlatformObject.platformEventEnum.badguyEvent:
+                platformEvent = new BadguyEvent(this);
+                break;
+            case PlatformObject.platformEventEnum.humeEvent:
+                platformEvent = new HumeEvent(this);
                 break;
         }
 

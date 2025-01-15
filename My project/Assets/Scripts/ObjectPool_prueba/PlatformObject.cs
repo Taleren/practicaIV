@@ -14,7 +14,15 @@ public class PlatformObject : ScriptableObject
         standard,
         testDialogue,
         barDialogue,
-        smokeDialogue
+        smokeDialogue,
+        endEvent,
+        mikeEvent,
+        sheriffEvent,
+        shellyEvent,
+        humeEvent,
+        badguyEvent
+
+            
     };
 
     public string name;
