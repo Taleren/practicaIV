@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class StandardEvent : IEvent
 {
+    Platform platform;
+    public StandardEvent(Platform p)
+    {
+        platform = p;
+    }
+
     public void startEvent()
     {
-        Debug.Log("-1 cerveza por puta");
+        platform.platformLoader.DrinkBeer(1);
     }
 
     public void endEvent()

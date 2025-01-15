@@ -83,7 +83,7 @@ public class Platform : MonoBehaviour, IPooleableObject
         switch (po.platformEvent)
         {
             case PlatformObject.platformEventEnum.standard:
-                platformEvent = new StandardEvent();
+                platformEvent = new StandardEvent(this);
                 break;
             case PlatformObject.platformEventEnum.testDialogue:
                 platformEvent = new DialogueEvent(this);

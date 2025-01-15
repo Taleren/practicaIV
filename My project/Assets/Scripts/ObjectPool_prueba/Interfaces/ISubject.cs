@@ -4,10 +4,10 @@ using UnityEngine;
 
 
 
-public interface ISubject
+public interface ISubject<T>
 {
-    void NotifyObservers();
-    void RemoveObserver(IObserver observer);
-    void AddObserver(IObserver observer);
+    void NotifyObservers(int resourceType, int quantity);
+    void RemoveObserver(IObserver<T> observer);
+    void AddObserver(IObserver<T> observer);
 
 }

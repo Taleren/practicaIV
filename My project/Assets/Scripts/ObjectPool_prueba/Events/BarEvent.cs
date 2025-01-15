@@ -69,12 +69,15 @@ public class BarEvent : IEvent
             case 0:
                 //Debug.Log("cerveza");
                 bottomText.text = "cervezo";
+                platform.platformLoader.AddBeer(Random.Range(3,6));
                 endEvent();
                 break;
             case 1:
                 //Debug.Log("atraco");
                 bottomText.text = "atraco";
                 endEvent();
+                platform.platformLoader.AddBeer(Random.Range(6, 10));
+                platform.platformLoader.SmokeCigar(1);
                 break;
         }
 

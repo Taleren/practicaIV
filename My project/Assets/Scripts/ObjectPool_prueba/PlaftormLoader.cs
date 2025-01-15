@@ -4,19 +4,27 @@ using Unity.VisualScripting;
 using UnityEditor.Experimental.RestService;
 using UnityEngine;
 
-public class PlatformLoader : MonoBehaviour, IObjectPool, ISubject
+public class PlatformLoader : MonoBehaviour, IObjectPool, ISubject<ResourceQuantity>
 {
     //public static PlatformLoader Instance;
 
     [SerializeField] private List<PlatformObject> platformObjects;
+    [SerializeField] private PlatformObject endPlatform;
     [SerializeField] private GameObject platformPrefab;
     [SerializeField] private GameObject platformParent;
     [SerializeField] private float branchProbability;
     [SerializeField] private Material fullscreenMat;
 
+    public int beerInitialCount;
+    public int cigarInitialCount;
+    private int beerCount;
+    private int cigarCount;
+    float drunkCounter = 0;
 
     public GameObject player;
     Animator playerAnim;
+    public int pathCounter = 0;
+    public int maxPathCounter = 15;
 
     private float currentBranchProbability;
     public bool isPaused = false;
@@ -43,6 +51,8 @@ public class PlatformLoader : MonoBehaviour, IObjectPool, ISubject
 
     float distortion = 0;
 
+    private List<IObserver<ResourceQuantity>> observerList = new List<IObserver<ResourceQuantity>>();
+
     private void Awake()
     {
         
@@ -51,11 +61,18 @@ public class PlatformLoader : MonoBehaviour, IObjectPool, ISubject
     // Start is called before the first frame update
     void Start()
     {
+
+
+        AddCigar(cigarInitialCount);
+        AddBeer(beerInitialCount);
+        cigarCount = cigarInitialCount;
+        beerCount = beerInitialCount;
         fullscreenMat.SetFloat("_distortionBlend", distortion);
         currentBranchProbability = branchProbability;
         poolablePlatforms.Add(platformPrefab.GetComponent<Platform>());
         platformPrefab.GetComponent<Platform>().Active = false;
         playerAnim = player.GetComponent<Animator>();
+
 
         for (int i = 0; i < totalPoolSize-1; i++)
         {
@@ -84,7 +101,7 @@ public class PlatformLoader : MonoBehaviour, IObjectPool, ISubject
 
 
         }
-        if (activePlatforms < maxPlatformNumber)
+        if (activePlatforms < maxPlatformNumber && pathCounter < maxPathCounter)
         {
             //canClick = false;
             createPlatform(platformObjects[0], platformMoveSpeed/2);
@@ -171,49 +188,108 @@ public class PlatformLoader : MonoBehaviour, IObjectPool, ISubject
 
     public void createRandomPlatform()
     {
-        distortion += 0.01f;
-        fullscreenMat.SetFloat("_distortionBlend", distortion);
-        playerAnim.Play("PlayerMove");
-        int isBranched = Random.Range(0, 100);
-        if(isBranched > branchProbability && !isBranch)
+        //distortion += 0.01f;
+        //fullscreenMat.SetFloat("_distortionBlend", distortion);
+        if (pathCounter < maxPathCounter)
         {
-            int random = Random.Range(0, probabilityTotal);
-            int i = 0;
-            while (i < platformObjects.Count - 1 && random > platformObjects[i].appearRatio)
+            pathCounter++;
+            playerAnim.Play("PlayerMove");
+            int isBranched = Random.Range(0, 100);
+            if (isBranched > branchProbability && !isBranch)
             {
-                
-                random -= platformObjects[i].appearRatio;
-                i++;
+                int random = Random.Range(0, probabilityTotal);
+                int i = 0;
+                while (i < platformObjects.Count - 1 && random > platformObjects[i].appearRatio)
+                {
+
+                    random -= platformObjects[i].appearRatio;
+                    i++;
+                }
+                //Mathf.Clamp(i, 1, platformObjects.Count);
+                createPlatform(platformObjects[i], platformMoveSpeed);
+
             }
-            //Mathf.Clamp(i, 1, platformObjects.Count);
-            createPlatform(platformObjects[i], platformMoveSpeed);
-            
+            else
+            {
+                int random1 = Random.Range(0, probabilityTotal);
+                int i = 0;
+                while (i < platformObjects.Count - 1 && random1 > platformObjects[i].appearRatio)
+                {
+
+                    random1 -= platformObjects[i].appearRatio;
+                    i++;
+                }
+                int random2 = Random.Range(0, probabilityTotal);
+                int j = 0;
+                while (j < platformObjects.Count - 1 && random2 > platformObjects[i].appearRatio)
+                {
+
+                    random2 -= platformObjects[j].appearRatio;
+                    j++;
+                }
+                //Mathf.Clamp(j, 1, platformObjects.Count);
+                //Mathf.Clamp(i, 1, platformObjects.Count);
+                createBranchPlatform(platformObjects[j], platformObjects[i], platformMoveSpeed);
+                isBranch = true;
+            }
+        }
+        else if (pathCounter == maxPathCounter)
+        {
+            createPlatform(platformObjects[0], platformMoveSpeed);
+            pathCounter++;
+            playerAnim.Play("PlayerMove");
         }
         else
         {
-            int random1 = Random.Range(0, probabilityTotal);
-            int i = 0;
-            while (i < platformObjects.Count - 1 && random1 > platformObjects[i].appearRatio)
+            pathCounter++;
+            playerAnim.Play("PlayerMove");
+            bool aPlatformIsMoving = false;
+            foreach (Platform pf in platformList)
             {
-                
-                random1 -= platformObjects[i].appearRatio;
-                i++;
+                aPlatformIsMoving = pf.isMoving;
             }
-            int random2 = Random.Range(0, probabilityTotal);
-            int j = 0;
-            while (j < platformObjects.Count - 1 && random2 > platformObjects[i].appearRatio)
+            //while(aPlatformIsMoving);
+            if (!aPlatformIsMoving && !isPaused)
             {
-                
-                random2 -= platformObjects[j].appearRatio;
-                j++;
+
+
+                if (platformList.Count != 0)
+                {
+
+                    foreach (Platform pf in platformList)
+                    {
+                        //Debug.Log(pf.name);
+                        pf.Move(platformMoveSpeed);
+                    }
+                    foreach (Platform pf in rightBranchQueue)
+                    {
+                        //Debug.Log(pf.name);
+                        pf.Move(platformMoveSpeed);
+                    }
+                    foreach (Platform pf in leftBranchQueue)
+                    {
+                        //Debug.Log(pf.name);
+                        pf.Move(platformMoveSpeed);
+                    }
+                }
+
+                if (usedSlots == maxPlatformNumber)
+                {
+
+                    platformList.Dequeue().Move(platformMoveSpeed);
+                    usedSlots--;
+                }
+
+
+                //usedSlots++;
+                //platform.Load(p);
+                //platform.gameObject.transform.position = new Vector3(6.06f, -4, 0);
+                //platform.OnCreate(s);
+                //platformList.Enqueue(platform);
             }
-            //Mathf.Clamp(j, 1, platformObjects.Count);
-            //Mathf.Clamp(i, 1, platformObjects.Count);
-            createBranchPlatform(platformObjects[j], platformObjects[i], platformMoveSpeed);
-            isBranch = true;
-            
         }
-        
+
+
 
     }
 
@@ -336,25 +412,55 @@ public class PlatformLoader : MonoBehaviour, IObjectPool, ISubject
     }
 
     //Patrón observer
-    private List<IObserver> observerList = new List<IObserver>();
 
-    public void NotifyObservers()
+
+    public void NotifyObservers(int resourceType, int quantity)
     {
+        ResourceQuantity resource = new ResourceQuantity(quantity, resourceType);
         for(int i = 0; i< observerList.Count; i++)
         {
-            observerList[i].Notify("pimba recurso creao");
+            observerList[i].UpdateObserver(resource);
         }
     }
-    public void RemoveObserver(IObserver observer)
+
+    public void RemoveObserver(IObserver<ResourceQuantity> observer)
     {
         observerList.Remove(observer);
     }
-    public void AddObserver(IObserver observer)
+
+    public void AddObserver(IObserver<ResourceQuantity> observer)
     {
         observerList.Add(observer);
+        Debug.Log("Observador añadido");
+    }
+
+    public void DrinkBeer(int quantity)
+    {
+        beerCount -= quantity;
+        drunkCounter += 0.01f * quantity;
+        fullscreenMat.SetFloat("_distortionBlend", drunkCounter);
+        NotifyObservers(0, -quantity);
 
     }
 
+    public void SmokeCigar(int quantity)
+    {
+        cigarCount -= quantity;
+        drunkCounter = 0;
+        fullscreenMat.SetFloat("_distortionBlend", drunkCounter);
+        NotifyObservers(1, -quantity);
+    }
+
+    public void AddBeer(int quantity)
+    {
+        beerCount += quantity;
+        NotifyObservers(0, quantity);
+    }
+    public void AddCigar(int quantity)
+    {
+        cigarCount += quantity;
+        NotifyObservers(1, quantity);
+    }
 
 }
 

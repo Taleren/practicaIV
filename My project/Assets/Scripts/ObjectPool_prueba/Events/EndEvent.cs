@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class SmokeEvent : IEvent
+public class EndEvent : IEvent
 {
     //public Platform platform;
     private Platform platform;
@@ -11,11 +11,11 @@ public class SmokeEvent : IEvent
     private TMP_Text dialogueTextbox;
     private TMP_Text nameTextbox;
     private TMP_Text buttonATextbox;
-    private TMP_Text bottomText;
     private TMP_Text buttonBTextbox;
     private Button buttonA;
     private Button buttonB;
-    public SmokeEvent(Platform p)
+    private TMP_Text bottomText;
+    public EndEvent(Platform p)
     {
         platform = p;
     }
@@ -25,7 +25,6 @@ public class SmokeEvent : IEvent
     {
         //Debug.Log("-1 cerveza por puta");
         dialogueUI = platform.canvas.transform.GetChild(0).gameObject;
-
         dialogueUI.SetActive(true);
         foreach (Transform g in dialogueUI.GetComponentsInChildren<Transform>(true))
         {
@@ -43,10 +42,10 @@ public class SmokeEvent : IEvent
         buttonB.SetPlatformEvent(this);
 
         bottomText.gameObject.SetActive(false);
-        dialogueTextbox.text = "Hola, forastero... El gran oráculo me narra tu futuro, y en él hay un cigarro de la mejor calidad.\nEcha un vistazo, siempre llevo el mejor género, apenas lleva plomo";
-        buttonATextbox.text = "";
-        buttonBTextbox.text = "Me vendría bien un paquete";
-        nameTextbox.text = "Lluvia Repentina";
+        dialogueTextbox.text = "es un bar esto";
+        buttonATextbox.text = "dame cerveza";
+        buttonBTextbox.text = "manos arriba";
+        nameTextbox.text = "barman";
 
     }
 
@@ -57,12 +56,10 @@ public class SmokeEvent : IEvent
         {
             g.gameObject.SetActive(false);
         }
-        //dialogueUI.SetActive(false);
         dialogueUI.SetActive(true);
         bottomText.gameObject.SetActive(true);
         bottomText.gameObject.GetComponent<Animator>().Play("fade");
         platform.platformLoader.isPaused = false;
-
     }
 
     public void HandleButton(int buttonID)
@@ -71,13 +68,16 @@ public class SmokeEvent : IEvent
         {
             case 0:
                 //Debug.Log("cerveza");
+                bottomText.text = "cervezo";
+                platform.platformLoader.AddBeer(Random.Range(3,6));
                 endEvent();
                 break;
             case 1:
-                bottomText.text = "Lluvia Repentina compartió su tabaco contigo.";
-                platform.platformLoader.AddCigar(5);
                 //Debug.Log("atraco");
+                bottomText.text = "atraco";
                 endEvent();
+                platform.platformLoader.AddBeer(Random.Range(6, 10));
+                platform.platformLoader.SmokeCigar(1);
                 break;
         }
 

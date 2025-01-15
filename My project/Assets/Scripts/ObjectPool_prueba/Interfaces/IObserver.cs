@@ -4,8 +4,8 @@ using UnityEngine;
 
 
 
-public interface IObserver 
+public interface IObserver<T>
 {
-    public void Notify(string notification);
+    public void UpdateObserver(T parameter);
 
 }

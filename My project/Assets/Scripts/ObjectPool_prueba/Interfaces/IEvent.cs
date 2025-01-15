@@ -6,6 +6,7 @@ using UnityEngine;
 
 public interface IEvent
 {
+
     //public Platform platform;
     public void startEvent();
     public void endEvent();

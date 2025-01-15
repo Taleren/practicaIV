@@ -14,28 +14,28 @@ public class TestUI : MonoBehaviour
         // Incrementar cervezas con "B"
         if (Input.GetKeyDown(KeyCode.B))
         {
-            manager.AddResource("Beer", 1);
+            manager.AddResource(0, 1);
             Debug.Log("+ Cerveza");
         }
 
         // Decrementar cervezas con "N"
         if (Input.GetKeyDown(KeyCode.N))
         {
-            manager.RemoveResource("Beer", 1);
+            manager.RemoveResource(0, 1);
             Debug.Log("- Cerveza");
         }
 
         // Incrementar cigarros con "C"
         if (Input.GetKeyDown(KeyCode.C))
         {
-            manager.AddResource("Cigar", 1);
+            manager.AddResource(1, 1);
             Debug.Log("+ Cigarro");
         }
 
         // Decrementar cigarros con "M"
         if (Input.GetKeyDown(KeyCode.M))
         {
-            manager.RemoveResource("Cigar", 1);
+            manager.RemoveResource(1, 1);
             Debug.Log("- Cigarro");
         }
     }

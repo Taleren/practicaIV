@@ -2,12 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResourceManager : MonoBehaviour, IObserver
+public class ResourceManager : MonoBehaviour, IObserver<ResourceQuantity>
 {
     //OBSERVER:
-    public void Notify(string notif)
+    
+    public void UpdateObserver(ResourceQuantity resource)
     {
-        Debug.Log(notif);
+        if (resource.quantity >= 0)
+        {
+            AddResource(resource.resourcetype, resource.quantity);
+        }
+        else
+        {
+            RemoveResource(resource.resourcetype, -resource.quantity);
+        }
     }
 
 
@@ -21,7 +29,7 @@ public class ResourceManager : MonoBehaviour, IObserver
 
     private void Awake()
     {
-
+        Object.FindObjectsOfType<PlatformLoader>()[0].AddObserver(this);
 
         cigarPool.AddCount(5);
         //AddResource("Beer", 5);
@@ -36,53 +44,53 @@ public class ResourceManager : MonoBehaviour, IObserver
 
     
 
-    public void AddResource(string resourceName, int amount)
+    public void AddResource(int resourceType, int amount)
     {
 
-        if (resourceName == "Beer")
+        if (resourceType == 0)
         {
             beerPool.AddCount(amount);
-            Debug.Log($"Agregando {amount} al recurso: {resourceName}");
+            Debug.Log($"Agregando {amount} al recurso: {resourceType}");
         }
-        else if (resourceName == "Cigar")
+        else if (resourceType == 1)
         {
             cigarPool.AddCount(amount);
-            Debug.Log($"Agregando {amount} al recurso: {resourceName}");
+            Debug.Log($"Agregando {amount} al recurso: {resourceType}");
         }
 
         else
         {
-            Debug.LogWarning($"Recurso no encontrado: {resourceName}");
+            Debug.LogWarning($"Recurso no encontrado: {resourceType}");
         }
     }
 
-    public void RemoveResource(string resourceName, int amount) 
+    public void RemoveResource(int resourceType, int amount) 
     {
-        if (resourceName == "Beer")
+        if (resourceType == 0)
         {
             beerPool.SubtractCount(amount);
-            Debug.Log($"Quitando {amount} al recurso: {resourceName}");
+            Debug.Log($"Quitando {amount} al recurso: {resourceType}");
         }
-        if (resourceName == "Cigar")
+        else if (resourceType == 1)
         {
             cigarPool.SubtractCount(amount);
-            Debug.Log($"Quitando {amount} al recurso: {resourceName}");
+            Debug.Log($"Quitando {amount} al recurso: {resourceType}");
         }
 
         else
         {
-            Debug.LogWarning($"Recurso no encontrado: {resourceName}");
+            Debug.LogWarning($"Recurso no encontrado: {resourceType}");
         }
     }
 
-    public int GetResourceCount(string resourceName)
+    public int GetResourceCount(int resourceType)
     {
         int count = 0;  
-        if (resourceName == "Beer")
+        if (resourceType == 0)
         {
             count = beerPool.GetCount();
         }
-        if (resourceName == "Cigar")
+        else if (resourceType == 1)
         {
             count = cigarPool.GetCount();
         }

@@ -9,7 +9,7 @@ public class ResourceObjectPool : MonoBehaviour
 
     public int poolInitialSize = 3; //Tamaño inicial del pool
     int activeResources = 0;
-
+    
     private List<IPooleableObject> resourcePool = new List<IPooleableObject>();
     private Stack<IPooleableObject> resourceStack = new Stack<IPooleableObject>();
 
@@ -25,8 +25,10 @@ public class ResourceObjectPool : MonoBehaviour
 
             IPooleableObject resource = obj.GetComponent<IPooleableObject>();
             resource.Active = false;
+            
             resourcePool.Add(resource);   //Meter en el stack uno
         }
+        //AddCount(initialQuantity);
     }
 
 
@@ -64,7 +66,8 @@ public class ResourceObjectPool : MonoBehaviour
     {
         for(int i = 0; i<amount; i++)
         {
-            resourceStack.Push(Get());
+            Resource r = (Resource)Get();
+            resourceStack.Push(r);
             Debug.Log("Recurso añadido al stack");
             activeResources++;
         }
@@ -78,6 +81,7 @@ public class ResourceObjectPool : MonoBehaviour
             {
                 IPooleableObject resource = resourceStack.Pop();
                 Release(resource);
+                activeResources--;
                 Debug.Log("Recurso quitado del stack");
 
                 //UI
@@ -87,6 +91,7 @@ public class ResourceObjectPool : MonoBehaviour
 
             else
             {
+                activeResources = 0;
                 resourceStack.Clear();
                 Debug.Log("Stack Vaciado");
             }
