@@ -923,6 +923,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc4b94f8f7bc54546a7c7c0ce0fc899b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clipList:
+  - {fileID: 8300000, guid: ca0eee8fde960bd40914b0634a91ee08, type: 3}
+  - {fileID: 8300000, guid: 2b11b1e849f5bbb438573b9639265bfb, type: 3}
+  - {fileID: 8300000, guid: c2850125aed4bc747a209e553e6cf181, type: 3}
 --- !u!4 &780540847
 Transform:
   m_ObjectHideFlags: 0

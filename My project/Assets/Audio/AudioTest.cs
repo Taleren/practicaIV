@@ -11,10 +11,10 @@ public class AudioTest : MonoBehaviour
     void Start()
     {
         // Reproducir un efecto de sonido
-        AudioManager.instance.PlaySFX(sfxClip);
+        //AudioManager.instance.PlaySFX(sfxClip);
 
         // Reproducir música en el canal 0
-        AudioManager.instance.PlayMusic(0, musicClip0, true);
+        //AudioManager.instance.PlayMusic(0, musicClip0, true);
 
         // Reproducir música en el canal 1
         //AudioManager.instance.PlayMusic(1, musicClip1, true);
@@ -23,15 +23,15 @@ public class AudioTest : MonoBehaviour
     void Update()
     {
         // Presiona "S" para detener la música del canal 0
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.W))
         {
-            AudioManager.instance.StopMusic(0);
+            AudioManager.instance.PlayMusic(0, musicClip0, true);
         }
 
         // Presiona "M" para reproducir nuevamente la música
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.S))
         {
-            AudioManager.instance.PlayMusic(1, musicClip1);
+            AudioManager.instance.PlayMusic(1, musicClip1, true);
         }
     }
 }

@@ -11,6 +11,9 @@ public class AudioManager : MonoBehaviour
     private AudioSource as_sfx;
     private AudioSource[] as_music;
 
+    //Lista de audioclips
+    public List<AudioClip> clipList;
+    public List<AudioClip> sfxList;
 
 
 
@@ -50,30 +53,66 @@ public class AudioManager : MonoBehaviour
     }
 
     //Play Music
-    public void PlayMusic(int index, AudioClip clip, bool loop = true)
+    public void PlayMusic(int musicIndex, AudioClip clip, bool loop = true)
     {
-        if (index >= 0 && index < as_music.Length && as_music[index] != null)
+        if (musicIndex >= 0 && musicIndex < as_music.Length && as_music[musicIndex] != null)
         {
-            as_music[index].clip = clip; //Auidioclip al audiosource
-            as_music[index].loop = loop; //Repe
-            as_music[index].Play();
+            as_music[musicIndex].clip = clip; //Auidioclip al audiosource
+            as_music[musicIndex].loop = loop; //Repe
+            as_music[musicIndex].Play();
         }
         else
         {
-            Debug.LogWarning($"El índice {index} está fuera de rango o el AudioSource no está asignado.");
+            Debug.LogWarning($"El índice {musicIndex} está fuera de rango o el AudioSource no está asignado.");
         }
     }
 
     //Stop Music
-    public void StopMusic(int index)
+    public void StopMusic(int musicIndex)
     {
-        if (index >= 0 && index < as_music.Length && as_music[index] != null)
+        if (musicIndex >= 0 && musicIndex < as_music.Length && as_music[musicIndex] != null)
         {
-            as_music[index].Stop();
+            as_music[musicIndex].Stop();
         }
         else
         {
-            Debug.LogWarning($"El índice {index} está fuera de rango o el AudioSource no está asignado.");
+            Debug.LogWarning($"El índice {musicIndex} está fuera de rango o el AudioSource no está asignado.");
+        }
+    }
+
+    public void PlayMusicByIndex(int index,int musicIndex)
+    {
+        if (musicIndex >= 0 && musicIndex < clipList.Count)
+        {
+            PlayMusic(index, clipList[musicIndex]);
+        }
+        else
+        {
+            Debug.LogWarning($"El índice {musicIndex} está fuera de rango.");
+        }
+    }
+
+    public void StopMusicByIndex(int index, int musicIndex)
+    {
+        if (musicIndex >= 0 && musicIndex < clipList.Count)
+        {
+            StopMusic(musicIndex);
+        }
+        else
+        {
+            Debug.LogWarning($"El índice {musicIndex} está fuera de rango.");
+        }
+    }
+
+    public void PlaySfxByIndex(int sfxIndex)
+    {
+        if (sfxIndex >= 0 && sfxIndex < sfxList.Count)
+        {
+            PlaySFX(sfxList[sfxIndex]);
+        }
+        else
+        {
+            Debug.LogWarning($"El índice {sfxIndex} está fuera de rango.");
         }
     }
 
