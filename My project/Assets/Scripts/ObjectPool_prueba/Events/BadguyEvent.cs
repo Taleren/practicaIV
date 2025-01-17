@@ -21,7 +21,6 @@ public class BadguyEvent : IEvent
 
     public void startEvent()
     {
-        //Debug.Log("-1 cerveza por puta");
         dialogueUI = platform.canvas.transform.GetChild(0).gameObject;
         dialogueUI.SetActive(true);
         foreach (Transform g in dialogueUI.GetComponentsInChildren<Transform>(true))
@@ -70,6 +69,7 @@ public class BadguyEvent : IEvent
                 if (random < platform.platformLoader.drunkCounter)
                 {
                     bottomText.text = "Desafiaste a Manodehierro, pero ibas demasiado borracho";
+                    AudioManager.instance.PlaySfxByIndex(8);
                     endEvent();
                     platform.platformLoader.AddBeer(Random.Range(-4, -2));
                     
@@ -78,6 +78,7 @@ public class BadguyEvent : IEvent
                 else
                 {
                     bottomText.text = "Desafiaste a Manodehierro y lograste ahuyentarlo.";
+                    AudioManager.instance.PlaySfxByIndex(8);
                     endEvent();
                     break;
                 }

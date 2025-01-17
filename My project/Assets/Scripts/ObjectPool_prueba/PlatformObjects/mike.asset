@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2c2dda62a9e3b67478905f10424c8680, type: 3}
-  m_Name: Bar
+  m_Name: mike
   m_EditorClassIdentifier: 
-  name: bar
+  name: standard2
   appearRatio: 5
-  platformEvent: 2
-  model: {fileID: -5646967605923803700, guid: f1da7e268c2f9f04c91b99a7915ebd7c, type: 3}
-  npc: {fileID: -2228417370725966487, guid: 9990b2109bcf02548aeb65d7d4221334, type: 3}
+  platformEvent: 5
+  model: {fileID: -8922128446140611174, guid: b3683ad5ec2136746a37a58ed2e8a47d, type: 3}
+  npc: {fileID: -5053925668127403250, guid: 9f3c6473243285446a6cc31da6a6680f, type: 3}

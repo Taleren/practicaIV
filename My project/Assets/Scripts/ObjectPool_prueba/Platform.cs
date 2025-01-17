@@ -129,20 +129,23 @@ public class Platform : MonoBehaviour, IPooleableObject
 
         
         int random = Random.Range(0, 4);
-        switch (random)
+        if (name != "end")
         {
-            case 0:
-                model.transform.eulerAngles = new Vector3(-90f, 0f, 0f);
-                break;
-            case 1:
-                model.transform.eulerAngles = new Vector3(-90f, 90f, 0f);
-                break;
-            case 2:
-                model.transform.eulerAngles = new Vector3(-90f, 180f, 0f);
-                break;
-            case 3:
-                model.transform.eulerAngles = new Vector3(-90f, 270f, 0f);
-                break;
+            switch (random)
+            {
+                case 0:
+                    model.transform.eulerAngles = new Vector3(-90f, 0f, 0f);
+                    break;
+                case 1:
+                    model.transform.eulerAngles = new Vector3(-90f, 90f, 0f);
+                    break;
+                case 2:
+                    model.transform.eulerAngles = new Vector3(-90f, 180f, 0f);
+                    break;
+                case 3:
+                    model.transform.eulerAngles = new Vector3(-90f, 270f, 0f);
+                    break;
+            }
         }
         
     }

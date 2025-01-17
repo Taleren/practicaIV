@@ -23,7 +23,6 @@ public class HumeEvent : IEvent
 
     public void startEvent()
     {
-        //Debug.Log("-1 cerveza por puta");
         dialogueUI = platform.canvas.transform.GetChild(0).gameObject;
         dialogueUI.SetActive(true);
         foreach (Transform g in dialogueUI.GetComponentsInChildren<Transform>(true))
@@ -67,6 +66,7 @@ public class HumeEvent : IEvent
         switch (buttonID)
         {
             case 0:
+                AudioManager.instance.PlaySfxByIndex(8);
                 bottomText.text = "Le disparaste al fantasma. Te fumas un cigarro y decides no volver a hablar de ello";
                 endEvent();
                 platform.platformLoader.SmokeCigar(1);

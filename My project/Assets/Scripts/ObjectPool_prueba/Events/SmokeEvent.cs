@@ -23,7 +23,7 @@ public class SmokeEvent : IEvent
    
     public void startEvent()
     {
-        //Debug.Log("-1 cerveza por puta");
+        AudioManager.instance.PlayMusicByIndex(0, 2);
         dialogueUI = platform.canvas.transform.GetChild(0).gameObject;
 
         dialogueUI.SetActive(true);
@@ -52,6 +52,7 @@ public class SmokeEvent : IEvent
 
     public void endEvent()
     {
+        AudioManager.instance.PlayMusicByIndex(0, 0);
         //dialogueUI = platform.canvas.transform.GetChild(0).gameObject;
         foreach (Transform g in dialogueUI.GetComponentsInChildren<Transform>())
         {

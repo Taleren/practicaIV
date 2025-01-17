@@ -23,7 +23,7 @@ public class BarEvent : IEvent
    
     public void startEvent()
     {
-        //Debug.Log("-1 cerveza por puta");
+        AudioManager.instance.PlayMusicByIndex(0, 1);
         dialogueUI = platform.canvas.transform.GetChild(0).gameObject;
         dialogueUI.SetActive(true);
         foreach (Transform g in dialogueUI.GetComponentsInChildren<Transform>(true))
@@ -42,15 +42,16 @@ public class BarEvent : IEvent
         buttonB.SetPlatformEvent(this);
 
         bottomText.gameObject.SetActive(false);
-        dialogueTextbox.text = "es un bar esto";
-        buttonATextbox.text = "dame cerveza";
-        buttonBTextbox.text = "manos arriba";
-        nameTextbox.text = "barman";
+        dialogueTextbox.text = "¡Pero bueno! Otra vez por aquí... ¿No crees que has bebido suficiente, vaquero? \nAunque que le vienes muy bien al negocio... ¿Qué te pongo?";
+        buttonATextbox.text = "Dame cerveza";
+        buttonBTextbox.text = "¡Manos arriba!";
+        nameTextbox.text = "Taberno Tabernez";
 
     }
 
     public void endEvent()
     {
+        AudioManager.instance.PlayMusicByIndex(0, 0);
         //dialogueUI = platform.canvas.transform.GetChild(0).gameObject;
         foreach (Transform g in dialogueUI.GetComponentsInChildren<Transform>())
         {
@@ -68,13 +69,14 @@ public class BarEvent : IEvent
         {
             case 0:
                 //Debug.Log("cerveza");
-                bottomText.text = "cervezo";
+                bottomText.text = "¡La cerveza siempre entra mejor con un piano desafinado de fondo!";
                 platform.platformLoader.AddBeer(Random.Range(3,6));
                 endEvent();
                 break;
             case 1:
                 //Debug.Log("atraco");
-                bottomText.text = "atraco";
+                bottomText.text = "Taberno tabernez prefiere conservar la vida a su cerveza. Vas a necesitar un cigarro";
+                AudioManager.instance.PlaySfxByIndex(8);
                 endEvent();
                 platform.platformLoader.AddBeer(Random.Range(6, 10));
                 platform.platformLoader.SmokeCigar(1);

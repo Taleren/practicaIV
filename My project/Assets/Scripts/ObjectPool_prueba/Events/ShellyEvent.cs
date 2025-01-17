@@ -23,7 +23,6 @@ public class ShellyEvent : IEvent
 
     public void startEvent()
     {
-        //Debug.Log("-1 cerveza por puta");
         dialogueUI = platform.canvas.transform.GetChild(0).gameObject;
         dialogueUI.SetActive(true);
         foreach (Transform g in dialogueUI.GetComponentsInChildren<Transform>(true))

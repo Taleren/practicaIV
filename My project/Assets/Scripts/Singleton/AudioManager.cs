@@ -57,9 +57,27 @@ public class AudioManager : MonoBehaviour
     {
         if (musicIndex >= 0 && musicIndex < as_music.Length && as_music[musicIndex] != null)
         {
-            as_music[musicIndex].clip = clip; //Auidioclip al audiosource
-            as_music[musicIndex].loop = loop; //Repe
-            as_music[musicIndex].Play();
+            if (as_music[musicIndex].isPlaying)
+            {
+                for (float i = as_music[musicIndex].volume; i > 0; i -= .01f)
+                {
+                    as_music[musicIndex].volume -= .01f;
+                }
+                as_music[musicIndex].clip = clip; //Auidioclip al audiosource
+                as_music[musicIndex].loop = loop; //Repe
+                as_music[musicIndex].Play();
+                for (float i = as_music[musicIndex].volume; i < 1; i += .01f)
+                {
+                    as_music[musicIndex].volume += .01f;
+                }
+
+            }
+            else
+            {
+                as_music[musicIndex].clip = clip; //Auidioclip al audiosource
+                as_music[musicIndex].loop = loop; //Repe
+                as_music[musicIndex].Play();
+            }
         }
         else
         {

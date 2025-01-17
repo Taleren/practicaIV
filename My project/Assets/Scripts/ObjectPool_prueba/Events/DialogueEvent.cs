@@ -25,7 +25,7 @@ public class DialogueEvent : IEvent
     }
     public void startEvent()
     {
-        //Debug.Log("-1 cerveza por puta");
+
         dialogueUI = platform.canvas.transform.GetChild(0).gameObject;
         dialogueUI.SetActive(true);
         platform.isMoving = true;

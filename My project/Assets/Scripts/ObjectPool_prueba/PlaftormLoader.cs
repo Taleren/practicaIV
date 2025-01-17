@@ -68,7 +68,7 @@ public class PlatformLoader : MonoBehaviour, IObjectPool, ISubject<ResourceQuant
     void Start()
     {
 
-
+        AudioManager.instance.PlayMusicByIndex(0, 0);
         AddCigar(cigarInitialCount);
         AddBeer(beerInitialCount);
         cigarCount = cigarInitialCount;
@@ -203,6 +203,7 @@ public class PlatformLoader : MonoBehaviour, IObjectPool, ISubject<ResourceQuant
         {
             pathCounter++;
             playerAnim.Play("PlayerMove");
+            AudioManager.instance.PlaySfxByIndex(0); 
             int isBranched = Random.Range(0, 100);
             if (isBranched > branchProbability && !isBranch)
             {
@@ -247,11 +248,13 @@ public class PlatformLoader : MonoBehaviour, IObjectPool, ISubject<ResourceQuant
             createPlatform(endPlatform, platformMoveSpeed);
             pathCounter++;
             playerAnim.Play("PlayerMove");
+            AudioManager.instance.PlaySfxByIndex(0);
         }
         else
         {
             pathCounter++;
             playerAnim.Play("PlayerMove");
+            AudioManager.instance.PlaySfxByIndex(0);
             bool aPlatformIsMoving = false;
             foreach (Platform pf in platformList)
             {
@@ -504,6 +507,7 @@ public class PlatformLoader : MonoBehaviour, IObjectPool, ISubject<ResourceQuant
         if(win)
         {
             gameOver.text = "¡LO LOGRASTE!";
+            AudioManager.instance.PlaySfxByIndex(6);
         }
         else
         {

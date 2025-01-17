@@ -24,6 +24,7 @@ public class EndEvent : IEvent
     public void startEvent()
     {
         platform.platformLoader.EndGame(true);
+        AudioManager.instance.PlaySfxByIndex(6);
     }
 
     public void endEvent()

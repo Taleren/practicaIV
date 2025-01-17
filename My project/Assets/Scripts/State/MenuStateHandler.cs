@@ -8,10 +8,15 @@ public class MenuStateHandler : MonoBehaviour
     private IState currentState;
     public GameObject mainStateObject;
     public GameObject creditsStateObject;
+    public Material mat;
+    float distortion = 0;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        mat.SetFloat("_distortionBlend", 0);
+        AudioManager.instance.PlayMusicByIndex(0,1);
         mainStateObject.SetActive(false);
         creditsStateObject.SetActive(false);
         SetState(new MenuMainState(this));
@@ -21,10 +26,13 @@ public class MenuStateHandler : MonoBehaviour
     void Update()
     {
         currentState.Update();
+        distortion += 0.001f * Time.deltaTime;
+        mat.SetFloat("_distortionBlend", distortion);
     }
 
     public void SetState(IState state)
     {
+
         // Exit old state
         if (currentState != null)
         {

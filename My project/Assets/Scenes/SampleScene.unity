@@ -667,6 +667,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dc0443ddbf8f3224491b11db739721b0, type: 2}
   - {fileID: 11400000, guid: 31c46d2183a72a94786b891d2dbbde0b, type: 2}
   - {fileID: 11400000, guid: 6bc881df1e6cbc647b0aff125201bf16, type: 2}
+  - {fileID: 11400000, guid: 084810892c8937c4ba349256c71040b7, type: 2}
+  - {fileID: 11400000, guid: be8651d35af972248933d9d26fa5a464, type: 2}
   endPlatform: {fileID: 11400000, guid: 173fbc0faa2e35b4ebd69bfe4cac1642, type: 2}
   platformPrefab: {fileID: 280180485}
   platformParent: {fileID: 1751862448}
@@ -1534,8 +1536,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1091784517}
   - {fileID: 1945963457}
+  - {fileID: 1091784517}
   - {fileID: 216222847}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1681,26 +1683,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 720615965}
-  - component: {fileID: 720615964}
+  - component: {fileID: 720615966}
   m_Layer: 0
-  m_Name: AudioManager
+  m_Name: AudioObserver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &720615964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 720615963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc4b94f8f7bc54546a7c7c0ce0fc899b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &720615965
 Transform:
   m_ObjectHideFlags: 0
@@ -1719,6 +1709,18 @@ Transform:
   - {fileID: 558146546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &720615966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 720615963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb1ee9b0026264647880382819a773f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
