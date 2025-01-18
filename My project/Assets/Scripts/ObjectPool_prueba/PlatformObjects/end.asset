@@ -15,5 +15,5 @@ MonoBehaviour:
   name: end
   appearRatio: 25
   platformEvent: 4
-  model: {fileID: 199474277128902238, guid: f7a5ee3fa565f1146bb0b3aef25caa74, type: 3}
+  model: {fileID: 4482788701611449811, guid: c92d02ed46127df4ca70c5cb69f7bf8b, type: 3}
   npc: {fileID: 0}

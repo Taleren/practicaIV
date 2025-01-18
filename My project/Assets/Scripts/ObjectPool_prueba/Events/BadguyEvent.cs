@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BadguyEvent : IEvent
 {
@@ -14,6 +15,8 @@ public class BadguyEvent : IEvent
     private Button buttonA;
     private Button buttonB;
     private TMP_Text bottomText;
+    private Sprite sprite;
+    private Image image;
     public BadguyEvent(Platform p)
     {
         platform = p;
@@ -21,7 +24,7 @@ public class BadguyEvent : IEvent
 
     public void startEvent()
     {
-        dialogueUI = platform.canvas.transform.GetChild(0).gameObject;
+        dialogueUI = platform.canvas.transform.GetChild(1).gameObject;
         dialogueUI.SetActive(true);
         foreach (Transform g in dialogueUI.GetComponentsInChildren<Transform>(true))
         {
@@ -35,9 +38,12 @@ public class BadguyEvent : IEvent
         bottomText = dialogueUI.GetComponentsInChildren<TMP_Text>()[4];
         buttonA = dialogueUI.GetComponentsInChildren<Button>()[0];
         buttonB = dialogueUI.GetComponentsInChildren<Button>()[1];
+        image = dialogueUI.GetComponentsInChildren<Image>()[5];
         buttonA.SetPlatformEvent(this);
         buttonB.SetPlatformEvent(this);
-
+        sprite = Resources.Load<Sprite>("UI/badguy");
+        image.sprite = sprite;
+        image.sprite = sprite;
         bottomText.gameObject.SetActive(false);
         dialogueTextbox.text = "Vaquero, este camino procedural es demasiado pequeño para los dos. Aparta de mi camino o me llevaré todas esas preciosas cervezas que llevas";
         buttonATextbox.text = "Por encima de mi poligonal cadaver";

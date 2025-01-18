@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5514869692304010289
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -7,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ditheringMaterial
-  m_Shader: {fileID: -6465566751694194690, guid: baf3379fe690508428534bd0f8e1a9c0,
+  m_Name: planta
+  m_Shader: {fileID: -6465566751694194690, guid: fd7b8dbd3a4df724e8c8247fdb63649d,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -24,6 +37,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _Texture2D:
+        m_Texture: {fileID: 2800000, guid: feb7b5905d576384e9e836b3a626b71a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -38,14 +55,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _ColorResolution: 8
-    - _distorsionNoiseScale: 4.98
-    - _distortionAmplitude: 5
-    - _distortionBlend: 0.00042201506
-    - _dither: 1.29
-    - _solidThreshold: 0.95
-    m_Colors:
-    - _Color1: {r: 0.7484276, g: 0, b: 0, a: 1}
-    - _Color2: {r: 0, g: 0, b: 0, a: 0}
-    - _distortionSpeed: {r: 1, g: 0, b: 0, a: 0}
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    m_Colors: []
   m_BuildTextureStacks: []

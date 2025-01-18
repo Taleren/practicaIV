@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.XR;
+using UnityEngine.UI;
 
 public class HumeEvent : IEvent
 {
@@ -16,6 +17,7 @@ public class HumeEvent : IEvent
     private Button buttonB;
     private TMP_Text bottomText;
     private Sprite sprite;
+    private Image image;
     public HumeEvent(Platform p)
     {
         platform = p;
@@ -23,7 +25,7 @@ public class HumeEvent : IEvent
 
     public void startEvent()
     {
-        dialogueUI = platform.canvas.transform.GetChild(0).gameObject;
+        dialogueUI = platform.canvas.transform.GetChild(1).gameObject;
         dialogueUI.SetActive(true);
         foreach (Transform g in dialogueUI.GetComponentsInChildren<Transform>(true))
         {
@@ -37,9 +39,11 @@ public class HumeEvent : IEvent
         bottomText = dialogueUI.GetComponentsInChildren<TMP_Text>()[4];
         buttonA = dialogueUI.GetComponentsInChildren<Button>()[0];
         buttonB = dialogueUI.GetComponentsInChildren<Button>()[1];
+        image = dialogueUI.GetComponentsInChildren<Image>()[5];
         buttonA.SetPlatformEvent(this);
         buttonB.SetPlatformEvent(this);
-        sprite = Resources.Load<Sprite>("Assets/UI/mike/");
+        sprite = Resources.Load<Sprite>("UI/hume");
+        image.sprite = sprite;
         bottomText.gameObject.SetActive(false);
         dialogueTextbox.text = "....*clank* *clank clonk*";
         buttonATextbox.text = "¡Coño! ¡Un fantasma!";

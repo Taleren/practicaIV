@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.XR;
-
+using UnityEngine.UI;
 public class MikeEvent : IEvent
 {
     private Platform platform;
@@ -16,6 +16,7 @@ public class MikeEvent : IEvent
     private Button buttonB;
     private TMP_Text bottomText;
     private Sprite sprite;
+    private Image image;
     public MikeEvent(Platform p)
     {
         platform = p;
@@ -23,7 +24,7 @@ public class MikeEvent : IEvent
 
     public void startEvent()
     {
-        dialogueUI = platform.canvas.transform.GetChild(0).gameObject;
+        dialogueUI = platform.canvas.transform.GetChild(1).gameObject;
         dialogueUI.SetActive(true);
         foreach (Transform g in dialogueUI.GetComponentsInChildren<Transform>(true))
         {
@@ -37,9 +38,11 @@ public class MikeEvent : IEvent
         bottomText = dialogueUI.GetComponentsInChildren<TMP_Text>()[4];
         buttonA = dialogueUI.GetComponentsInChildren<Button>()[0];
         buttonB = dialogueUI.GetComponentsInChildren<Button>()[1];
+        image = dialogueUI.GetComponentsInChildren<Image>()[5];
         buttonA.SetPlatformEvent(this);
         buttonB.SetPlatformEvent(this);
-        sprite = Resources.Load<Sprite>("Assets/UI/mike/");
+        sprite = Resources.Load<Sprite>("UI/mike");
+        image.sprite = sprite;
         bottomText.gameObject.SetActive(false);
         dialogueTextbox.text = "Es eso que huelo por ahí... ¿cigarros? ¿No le prestarías un chin de tabaco a un pobre compañero como yo? Creo que si no fumo ahora mismo podría volarme la cabeza  con el revolver...";
         buttonATextbox.text = "Aquí tienes";

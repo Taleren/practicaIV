@@ -129,7 +129,7 @@ public class Platform : MonoBehaviour, IPooleableObject
 
         
         int random = Random.Range(0, 4);
-        if (name != "end")
+        if (name.Trim() != "end")
         {
             switch (random)
             {
@@ -146,6 +146,9 @@ public class Platform : MonoBehaviour, IPooleableObject
                     model.transform.eulerAngles = new Vector3(-90f, 270f, 0f);
                     break;
             }
+        }else
+        {
+            model.transform.eulerAngles = new Vector3(-90f, 180f, 0f);
         }
         
     }

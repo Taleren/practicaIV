@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
-using UnityEditor.Experimental.RestService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -28,8 +27,8 @@ public class PlatformLoader : MonoBehaviour, IObjectPool, ISubject<ResourceQuant
 
     public GameObject player;
     Animator playerAnim;
-    public int pathCounter = 0;
-    public int maxPathCounter = 15;
+    public int pathCounter;
+    public int maxPathCounter;
 
     private float currentBranchProbability;
     public bool isPaused = false;
@@ -67,7 +66,7 @@ public class PlatformLoader : MonoBehaviour, IObjectPool, ISubject<ResourceQuant
     // Start is called before the first frame update
     void Start()
     {
-
+        ParticleManager.instance.PlayParticle(2);
         AudioManager.instance.PlayMusicByIndex(0, 0);
         AddCigar(cigarInitialCount);
         AddBeer(beerInitialCount);
@@ -203,6 +202,7 @@ public class PlatformLoader : MonoBehaviour, IObjectPool, ISubject<ResourceQuant
         {
             pathCounter++;
             playerAnim.Play("PlayerMove");
+            ParticleManager.instance.PlayParticle(3);
             AudioManager.instance.PlaySfxByIndex(0); 
             int isBranched = Random.Range(0, 100);
             if (isBranched > branchProbability && !isBranch)

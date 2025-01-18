@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.XR;
-
+using UnityEngine.UI;
 public class ShellyEvent : IEvent
 {
     private Platform platform;
@@ -16,6 +16,7 @@ public class ShellyEvent : IEvent
     private Button buttonB;
     private TMP_Text bottomText;
     private Sprite sprite;
+    private Image image;
     public ShellyEvent(Platform p)
     {
         platform = p;
@@ -23,7 +24,7 @@ public class ShellyEvent : IEvent
 
     public void startEvent()
     {
-        dialogueUI = platform.canvas.transform.GetChild(0).gameObject;
+        dialogueUI = platform.canvas.transform.GetChild(1).gameObject;
         dialogueUI.SetActive(true);
         foreach (Transform g in dialogueUI.GetComponentsInChildren<Transform>(true))
         {
@@ -37,9 +38,11 @@ public class ShellyEvent : IEvent
         bottomText = dialogueUI.GetComponentsInChildren<TMP_Text>()[4];
         buttonA = dialogueUI.GetComponentsInChildren<Button>()[0];
         buttonB = dialogueUI.GetComponentsInChildren<Button>()[1];
+        image = dialogueUI.GetComponentsInChildren<Image>()[5];
         buttonA.SetPlatformEvent(this);
         buttonB.SetPlatformEvent(this);
-        sprite = Resources.Load<Sprite>("Assets/UI/shelly/");
+        sprite = Resources.Load<Sprite>("UI/shelly");
+        image.sprite = sprite;
         bottomText.gameObject.SetActive(false);
         dialogueTextbox.text = "¿Qué te cuentas forastero? Menudas pintas llevas... A cambio de un trago podría darte una lección o dos sobre la moda actual. Hasta tu caballo parece más elegante que tú.";
         buttonATextbox.text = "Cuéntame lo que sepas";

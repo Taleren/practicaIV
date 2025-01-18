@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class SmokeEvent : IEvent
 {
     //public Platform platform;
@@ -15,6 +15,8 @@ public class SmokeEvent : IEvent
     private TMP_Text buttonBTextbox;
     private Button buttonA;
     private Button buttonB;
+    private Sprite sprite;
+    private Image image;
     public SmokeEvent(Platform p)
     {
         platform = p;
@@ -24,7 +26,7 @@ public class SmokeEvent : IEvent
     public void startEvent()
     {
         AudioManager.instance.PlayMusicByIndex(0, 2);
-        dialogueUI = platform.canvas.transform.GetChild(0).gameObject;
+        dialogueUI = platform.canvas.transform.GetChild(1).gameObject;
 
         dialogueUI.SetActive(true);
         foreach (Transform g in dialogueUI.GetComponentsInChildren<Transform>(true))
@@ -39,9 +41,11 @@ public class SmokeEvent : IEvent
         bottomText = dialogueUI.GetComponentsInChildren<TMP_Text>()[4];
         buttonA = dialogueUI.GetComponentsInChildren<Button>()[0];
         buttonB = dialogueUI.GetComponentsInChildren<Button>()[1];
+        image = dialogueUI.GetComponentsInChildren<Image>()[5];
         buttonA.SetPlatformEvent(this);
         buttonB.SetPlatformEvent(this);
-
+        sprite = Resources.Load<Sprite>("UI/lluvia");
+        image.sprite = sprite;
         bottomText.gameObject.SetActive(false);
         dialogueTextbox.text = "Hola, forastero... El gran oráculo me narra tu futuro, y en él hay un cigarro de la mejor calidad.\nEcha un vistazo, siempre llevo el mejor género, apenas lleva plomo";
         buttonATextbox.text = "";
