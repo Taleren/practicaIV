@@ -7,7 +7,7 @@ public class ResourceObjectPool : MonoBehaviour
     public GameObject prefab;
     public GameObject container;
 
-    public int poolInitialSize = 3; //Tamaño inicial del pool
+    public int poolInitialSize = 3;
     int activeResources = 0;
     
     private List<IPooleableObject> resourcePool = new List<IPooleableObject>();
@@ -26,9 +26,8 @@ public class ResourceObjectPool : MonoBehaviour
             IPooleableObject resource = obj.GetComponent<IPooleableObject>();
             resource.Active = false;
             
-            resourcePool.Add(resource);   //Meter en el stack uno
+            resourcePool.Add(resource);   
         }
-        //AddCount(initialQuantity);
     }
 
 
@@ -54,21 +53,12 @@ public class ResourceObjectPool : MonoBehaviour
         obj.Reset();
     }
 
-    /*
-    public void Return(GameObject obj)
-    {
-        obj.SetActive(true);
-        pool.Enqueue(obj);
-    }*/
-
-
     public void AddCount(int amount)
     {
         for(int i = 0; i<amount; i++)
         {
             Resource r = (Resource)Get();
             resourceStack.Push(r);
-            Debug.Log("Recurso añadido al stack");
             activeResources++;
         }
     }
@@ -82,22 +72,17 @@ public class ResourceObjectPool : MonoBehaviour
                 IPooleableObject resource = resourceStack.Pop();
                 Release(resource);
                 activeResources--;
-                Debug.Log("Recurso quitado del stack");
-
-                //UI
-                //GameObject cigarro = Instantiate(prefab);
-                //cigarro.transform.SetParent(container.transform, false);
             }
 
+            //Vaciar el stack
             else
             {
                 activeResources = 0;
                 resourceStack.Clear();
-                Debug.Log("Stack Vaciado");
             }
 
         }
     }
 
-    public int GetCount() => activeResources; //Devuelve count
+    public int GetCount() => activeResources;
 }

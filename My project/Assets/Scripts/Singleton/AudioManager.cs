@@ -64,7 +64,7 @@ public class AudioManager : MonoBehaviour
                     as_music[musicIndex].volume -= .01f;
                 }
                 as_music[musicIndex].clip = clip; //Auidioclip al audiosource
-                as_music[musicIndex].loop = loop; //Repe
+                as_music[musicIndex].loop = loop; //loop
                 as_music[musicIndex].Play();
                 for (float i = as_music[musicIndex].volume; i < 1; i += .01f)
                 {
@@ -75,7 +75,7 @@ public class AudioManager : MonoBehaviour
             else
             {
                 as_music[musicIndex].clip = clip; //Auidioclip al audiosource
-                as_music[musicIndex].loop = loop; //Repe
+                as_music[musicIndex].loop = loop; //loop
                 as_music[musicIndex].Play();
             }
         }

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ResourceManager : MonoBehaviour, IObserver<ResourceQuantity>
 {
-    //OBSERVER:
     
     public void UpdateObserver(ResourceQuantity resource)
     {
@@ -17,29 +16,18 @@ public class ResourceManager : MonoBehaviour, IObserver<ResourceQuantity>
             RemoveResource(resource.resourcetype, -resource.quantity);
         }
     }
-
-
-
+    
+    //Pools de cervezas y cigarros
     public ResourceObjectPool beerPool;
     public ResourceObjectPool cigarPool;
 
-    //Delegado y evento para observer
-    public delegate void ResourceChanged(string resourceType, int newAmount);
-    public event ResourceChanged OnResourceChanged;
 
     private void Awake()
     {
         Object.FindObjectsOfType<PlatformLoader>()[0].AddObserver(this);
 
         cigarPool.AddCount(5);
-        //AddResource("Beer", 5);
-
-        Debug.Log(cigarPool.GetCount());
-
         beerPool.AddCount(5);
-        
-        Debug.Log(beerPool.GetCount());
-
     }
 
     
@@ -50,12 +38,10 @@ public class ResourceManager : MonoBehaviour, IObserver<ResourceQuantity>
         if (resourceType == 0)
         {
             beerPool.AddCount(amount);
-            Debug.Log($"Agregando {amount} al recurso: {resourceType}");
         }
         else if (resourceType == 1)
         {
             cigarPool.AddCount(amount);
-            Debug.Log($"Agregando {amount} al recurso: {resourceType}");
         }
 
         else
@@ -69,12 +55,10 @@ public class ResourceManager : MonoBehaviour, IObserver<ResourceQuantity>
         if (resourceType == 0)
         {
             beerPool.SubtractCount(amount);
-            Debug.Log($"Quitando {amount} al recurso: {resourceType}");
         }
         else if (resourceType == 1)
         {
             cigarPool.SubtractCount(amount);
-            Debug.Log($"Quitando {amount} al recurso: {resourceType}");
         }
 
         else
